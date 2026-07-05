@@ -62,7 +62,7 @@
 /* ---------- image glitch transition (carousel, lightbox) ---------- */
 
 .glitch-swap {
-	animation: img-glitch 0.4s steps(1) both;
+	animation: img-glitch 0.55s steps(1) both;
 }
 
 @keyframes img-glitch {

@@ -310,6 +310,8 @@
 
 .skill-list { margin-top: 14px; }
 
+.skill-list-heading { margin-top: 30px; }
+
 .skill-list dt {
 	font-family: var(--font-mono);
 	font-size: 12px;
