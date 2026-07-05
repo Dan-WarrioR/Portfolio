@@ -1,0 +1,143 @@
+/* ============================================================
+   base.css — design tokens, reset, shared primitives, overlays
+   ============================================================ */
+
+:root {
+	--bg: #060708;
+	--bg-raise: #0b0d0e;
+	--bg-panel: #0d1114;
+	--accent: #3ee6ff;
+	--accent-dim: rgba(62, 230, 255, 0.35);
+	--accent-faint: rgba(62, 230, 255, 0.08);
+	--text: #e4e8ea;
+	--muted: #7c868c;
+	--line: rgba(62, 230, 255, 0.18);
+	--danger: #ff3b5c;
+	--glitch-a: #ff2ea6;
+	--glitch-b: #9ffd32;
+	--font-display: "Rajdhani", sans-serif;
+	--font-mono: "JetBrains Mono", monospace;
+	--clip-card: polygon(0 0, calc(100% - 18px) 0, 100% 18px, 100% 100%, 18px 100%, 0 calc(100% - 18px));
+	--clip-btn: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 12px 100%, 0 calc(100% - 12px));
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+	background: var(--bg);
+	color: var(--text);
+	font-family: var(--font-display);
+	font-size: 17px;
+	line-height: 1.6;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	overflow-x: hidden;
+}
+
+a { color: var(--accent); text-decoration: none; }
+
+img { max-width: 100%; display: block; }
+
+::selection { background: var(--accent); color: var(--bg); }
+
+/* ---------- global overlays ---------- */
+
+.fx-scanlines {
+	position: fixed;
+	inset: 0;
+	pointer-events: none;
+	z-index: 90;
+	background: repeating-linear-gradient(
+		to bottom,
+		transparent 0px,
+		transparent 2px,
+		rgba(0, 0, 0, 0.14) 3px,
+		transparent 4px
+	);
+	opacity: 0.5;
+}
+
+.fx-vignette {
+	position: fixed;
+	inset: 0;
+	pointer-events: none;
+	z-index: 89;
+	background: radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, 0.55) 100%);
+}
+
+/* ---------- shared primitives ---------- */
+
+.hud-label {
+	font-family: var(--font-mono);
+	font-size: 12px;
+	letter-spacing: 0.18em;
+	text-transform: uppercase;
+	color: var(--muted);
+}
+
+.hud-label--accent { color: var(--accent); }
+
+.btn {
+	display: inline-block;
+	font-family: var(--font-mono);
+	font-size: 14px;
+	font-weight: 700;
+	letter-spacing: 0.14em;
+	text-transform: uppercase;
+	color: var(--accent);
+	background: var(--accent-faint);
+	border: 1px solid var(--accent-dim);
+	padding: 12px 28px;
+	clip-path: var(--clip-btn);
+	cursor: pointer;
+	transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.btn:hover {
+	background: var(--accent);
+	color: var(--bg);
+	box-shadow: 0 0 24px var(--accent-dim);
+}
+
+.btn--ghost {
+	background: transparent;
+	color: var(--text);
+	border-color: rgba(228, 232, 234, 0.25);
+}
+
+.btn--ghost:hover {
+	background: var(--text);
+	color: var(--bg);
+	box-shadow: none;
+}
+
+.hero-actions {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 16px;
+}
+
+.tag {
+	display: inline-block;
+	font-family: var(--font-mono);
+	font-size: 11px;
+	letter-spacing: 0.12em;
+	text-transform: uppercase;
+	color: var(--accent);
+	border: 1px solid var(--line);
+	background: var(--accent-faint);
+	padding: 3px 10px;
+	margin: 0 6px 6px 0;
+}
+
+.tag--engine { background: var(--accent); color: var(--bg); font-weight: 700; }
+
+.rule {
+	height: 1px;
+	background: linear-gradient(to right, var(--accent-dim), transparent);
+	border: none;
+	margin: 28px 0;
+}
