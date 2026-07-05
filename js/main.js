@@ -1,4 +1,5 @@
 import { renderHome, renderProjects, renderProject, renderAbout, renderNotFound } from "./views.js";
+import { initBackground } from "./background.js";
 
 const appContainer = document.getElementById("app");
 
@@ -53,4 +54,5 @@ async function render() {
 
 window.addEventListener("hashchange", render);
 document.getElementById("footer-year").textContent = String(new Date().getFullYear());
+initBackground(document.querySelector(".fx-particles"));
 render();

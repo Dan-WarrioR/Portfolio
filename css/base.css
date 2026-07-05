@@ -45,6 +45,13 @@ img { max-width: 100%; display: block; }
 
 /* ---------- global overlays ---------- */
 
+.fx-particles {
+	position: fixed;
+	inset: 0;
+	z-index: -1;
+	pointer-events: none;
+}
+
 .fx-scanlines {
 	position: fixed;
 	inset: 0;
