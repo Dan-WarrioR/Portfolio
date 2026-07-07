@@ -335,17 +335,46 @@ function initCarousel(carousel, screenshots, projectTitle) {
 	const viewport = carousel.querySelector(".carousel-viewport");
 	const status = carousel.querySelector(".carousel-status");
 	let currentIndex = 0;
+	let suppressClick = false;
 
 	function show(index) {
 		currentIndex = (index + screenshots.length) % screenshots.length;
 		const figure = createGlitchImage(screenshots[currentIndex], `${projectTitle} screenshot ${currentIndex + 1}`);
-		figure.addEventListener("click", () => openLightbox(screenshots[currentIndex], projectTitle));
+		figure.addEventListener("click", () => {
+			if (!suppressClick) {
+				openLightbox(screenshots[currentIndex], projectTitle);
+			}
+		});
 		viewport.replaceChildren(figure);
 		status.textContent = `${String(currentIndex + 1).padStart(2, "0")} / ${String(screenshots.length).padStart(2, "0")}`;
 	}
 
 	carousel.querySelector(".carousel-btn--prev").addEventListener("click", () => show(currentIndex - 1));
 	carousel.querySelector(".carousel-btn--next").addEventListener("click", () => show(currentIndex + 1));
+
+	const SWIPE_MIN_DISTANCE = 40;
+	let swipeStartX = null;
+	let swipeStartY = null;
+	viewport.addEventListener("pointerdown", (event) => {
+		swipeStartX = event.clientX;
+		swipeStartY = event.clientY;
+	});
+	viewport.addEventListener("pointerup", (event) => {
+		if (swipeStartX === null) {
+			return;
+		}
+		const deltaX = event.clientX - swipeStartX;
+		const deltaY = event.clientY - swipeStartY;
+		swipeStartX = null;
+		if (Math.abs(deltaX) >= SWIPE_MIN_DISTANCE && Math.abs(deltaX) > Math.abs(deltaY)) {
+			suppressClick = true;
+			setTimeout(() => { suppressClick = false; }, 0);
+			show(currentIndex + (deltaX < 0 ? 1 : -1));
+		}
+	});
+	viewport.addEventListener("pointercancel", () => {
+		swipeStartX = null;
+	});
 
 	function onKeyDown(event) {
 		if (document.querySelector(".lightbox") || !document.body.contains(carousel)) {

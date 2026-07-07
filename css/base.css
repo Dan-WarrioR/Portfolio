@@ -28,6 +28,7 @@ html { scroll-behavior: smooth; }
 body {
 	background: var(--bg);
 	color: var(--text);
+	-webkit-tap-highlight-color: transparent;
 	font-family: var(--font-display);
 	font-size: 17px;
 	line-height: 1.6;

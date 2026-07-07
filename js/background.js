@@ -1,4 +1,5 @@
-const PARTICLE_COUNT = 70;
+const MAX_PARTICLE_COUNT = 70;
+const AREA_PER_PARTICLE = 16000;
 const LINK_DISTANCE = 140;
 const MAX_SPEED = 0.22;
 const PARTICLE_COLOR = "62, 230, 255";
@@ -6,8 +7,12 @@ const MAX_DEVICE_PIXEL_RATIO = 1.5;
 
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
+function particleCountFor(width, height) {
+	return Math.min(MAX_PARTICLE_COUNT, Math.round((width * height) / AREA_PER_PARTICLE));
+}
+
 function createParticles(width, height) {
-	return Array.from({ length: PARTICLE_COUNT }, () => ({
+	return Array.from({ length: particleCountFor(width, height) }, () => ({
 		x: Math.random() * width,
 		y: Math.random() * height,
 		vx: (Math.random() - 0.5) * MAX_SPEED * 2,
@@ -30,7 +35,7 @@ export function initBackground(canvas) {
 		canvas.width = width * pixelRatio;
 		canvas.height = height * pixelRatio;
 		context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
-		if (!particles.length) {
+		if (particles.length !== particleCountFor(width, height)) {
 			particles = createParticles(width, height);
 		}
 	}
